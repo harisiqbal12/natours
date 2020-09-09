@@ -44,6 +44,14 @@ process.on('unhandledRejection', err => {
   });
 });
 
+// SIGTERM automatic shutdown the application if there is an error.
+process.on('SIGTERM', () => {
+  console.log('SIGTERM RECEIVED. Shutting down gracefully');
+  server.close(() => {
+    console.log('Process Terminated');
+  });
+});
+
 // function capital_letter(str) {
 //     str = str.split(' ');
 
