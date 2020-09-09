@@ -16,6 +16,10 @@ const signToken = userId => {
 
 const createSendToken = (user, statusCode, req, res) => {
   const token = signToken(user._id);
+  let samesiteOptions;
+  if (req.secure || req.headers['x-forwarded-proto'] === 'https') {
+    samesiteOptions = 'none';
+  }
 
   res.cookie('jwt', token, {
     expires: new Date(
@@ -23,9 +27,8 @@ const createSendToken = (user, statusCode, req, res) => {
         parseInt(process.env.COOKIE_EXPIRE, 10) * 24 * 60 * 60 * 1000,
     ),
     httpOnly: true,
-    secure: req.secure || req.headers['x-forwarded-proto'] === 'https'
-    // secure: true,
-    // sameSite: 'none',
+    secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
+    sameSite: samesiteOptions,
   });
 
   // Remove the password from output

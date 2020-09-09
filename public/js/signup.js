@@ -9,6 +9,7 @@ export const signup = async (name, email, password, passwordConfirm) => {
     const res = await axios({
       method: 'post',
       url: '/api/v1/users/signup',
+      withCredentials: true,
       data: {
         name,
         email,

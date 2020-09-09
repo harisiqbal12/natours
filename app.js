@@ -9,6 +9,7 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
+const cors = require('cors');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -31,9 +32,16 @@ dotenv.config({ path: './config.env' });
 
 //@GLOBAL-MIDDLEWARE
 
+// Implement cors
+app.use(cors({
+  credentials: true
+}));
+
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
+
+app.options('*', cors());
 
 // Serving statuc files
 app.use(express.static(path.join(__dirname, 'public')));

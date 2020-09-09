@@ -8,7 +8,7 @@ export const login = async (email, password) => {
     console.log('trying');
     const res = await axios({
       method: 'post',
-      // withCredentials: false,
+      withCredentials: true,
       // xsrfCookieName: 'jwt',
       // httpAgent: new http.Agent({ keepAlive: true }),
       // headers: { 'X-Requested-With': 'XMLHttpRequest' },
@@ -39,6 +39,7 @@ export const logout = async () => {
     const res = await axios({
       method: 'GET',
       url: '/api/v1/users/logout',
+      withCredentials: true
     });
     if (res.data.status === 'success') {
       showAlert('success', 'loggedout');
