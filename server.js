@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 const mangoose = require('mongoose');
 const dotenv = require('dotenv');
 const app = require('./app');
@@ -34,11 +33,10 @@ mangoos();
  * @SERVER
  */
 
-const expire = new Date(Date.now() + parseInt(process.env.COOKIE_EXPIRE, 10));
+// const expire = new Date(Date.now() + parseInt(process.env.COOKIE_EXPIRE, 10));
 
-const port = process.env.PORT;
-const server = app.listen(port, () => {
-});
+const port = process.env.PORT || 3000;
+const server = app.listen(port, () => {});
 
 process.on('unhandledRejection', err => {
   server.close(() => {
