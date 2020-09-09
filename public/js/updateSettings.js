@@ -11,7 +11,7 @@ export const updateSetting = async (data, type) => {
         const res = await axios({
             method: 'PATCH',
             // withCredentials: false,
-            url: `api/v1/users/${url}`,
+            url: `/api/v1/users/${url}`,
             data,
         });
 

@@ -13,13 +13,13 @@ export const login = async (email, password) => {
       // httpAgent: new http.Agent({ keepAlive: true }),
       // headers: { 'X-Requested-With': 'XMLHttpRequest' },
       // httpAgent: true,
-      url: 'api/v1/users/login',
+      url: '/api/v1/users/login',
       data: {
         email,
         password,
       },
     });
-    console.log(res);
+    
     if (res.data.status === 'success') {
       showAlert('success', 'Logged in successfully');
       window.setTimeout(() => {
@@ -38,7 +38,7 @@ export const logout = async () => {
   try {
     const res = await axios({
       method: 'GET',
-      url: 'api/v1/users/logout',
+      url: '/api/v1/users/logout',
     });
     if (res.data.status === 'success') {
       showAlert('success', 'loggedout');

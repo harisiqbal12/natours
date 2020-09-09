@@ -19,7 +19,6 @@ exports.getOverview = catchAsync(async (req, res, next) => {
 });
 
 exports.getTour = catchAsync(async (req, res, next) => {
-  // console.log(req.params)
   // const name = req.params.tourName.split('-');
 
   // name.forEach((el, index) => {
@@ -35,8 +34,6 @@ exports.getTour = catchAsync(async (req, res, next) => {
     return next(new AppError('There is not tour with that name', 404));
   }
 
-  // console.log(tour)
-  // console.log(tour)
   res.status(200).render('tour', {
     title: `${tour.name} Tour`,
     tour,
@@ -57,10 +54,7 @@ exports.getAccount = (req, res) => {
 
 exports.getMyTours = async (req, res) => {
   // Find all bookings
-  console.log('my bookings');
-  console.log(req.user.id);
   const bookings = await Booking.find({ user: req.user.id });
-  console.log(bookings);
 
   // Find tours with the returned IDs.
   const tourIds = bookings.map(el => el.tour);

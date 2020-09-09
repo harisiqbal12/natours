@@ -34,7 +34,6 @@ const createSendToken = (user, statusCode, res) => {
 
   // Remove the password from output
   user.password = undefined;
-  console.log('cookie sending JWT');
   res.status(statusCode).json({
     status: 'success',
     token,
@@ -67,7 +66,6 @@ exports.signup = catchAsync(async (req, res, next) => {
     // passwordResetExpires: req.body.passwordResetExpires,
   });
   const url = `${req.protocol}://${req.get('host')}/me`;
-  console.log(newUser);
 
   await new Email(newUser, url).sendWelcome();
   createSendToken(newUser, 201, res);
@@ -135,8 +133,6 @@ exports.protect = catchAsync(async (req, res, next) => {
 
 // Only for rendered pages, no errors!
 exports.isLoggedIn = catchAsync(async (req, res, next) => {
-  // console.log('cookies');
-  // console.log(req.cookies);
   if (req.cookies.jwt) {
     // Verify token
     try {
@@ -159,7 +155,6 @@ exports.isLoggedIn = catchAsync(async (req, res, next) => {
 
       // THERE IS A LOGGED IN USER.
       res.locals.user = freshUser;
-      // console.log(res.locals)
       return next();
     } catch (err) {
       return next();
@@ -172,8 +167,6 @@ exports.isLoggedIn = catchAsync(async (req, res, next) => {
 exports.ristrictTo = (...roles) => {
   return (req, res, next) => {
     // roles in a array.
-    console.log(req.user);
-    console.log(roles);
 
     if (!roles.includes(req.user.role)) {
       return next(
@@ -254,11 +247,9 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 
 exports.updatePassword = catchAsync(async (req, res, next) => {
   // Get user from collection
-  console.log(req.user.id);
   const user = await User.findById(req.user.id).select('+password');
   const { passwordCurrent, password, passwordConfirm } = req.body;
   // Check if POSTed current password is correct
-  console.log(user);
   if (!(await user.correctPassword(passwordCurrent, user.password))) {
     return next(new AppError('Incorrect Password try again', 401));
   }

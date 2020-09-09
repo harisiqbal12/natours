@@ -129,7 +129,6 @@ tourScheme.index({ slug: 1 });
 tourScheme.index({ startLocation: '2dsphere' });
 
 tourScheme.virtual('durationWeeks').get(function () {
-    // console.log(this.duration / 7);
     return this.duration / 7;
 });
 
@@ -147,13 +146,11 @@ tourScheme.virtual('reviews', {
 
  
  tourScheme.pre('save', function(next) {
-     console.log('will save document...')
      
      next();
      
     })
 tourScheme.post('save', function(doc, next) {
-    console.log(doc)
         
     next();
 });
@@ -192,7 +189,6 @@ tourScheme.pre(/^find/, function (next) {
 });
 
 tourScheme.post(/^find/, function (doc, next) {
-    console.log(`query took ${Date.now() - this.start} miliseconds`);
 
     next();
 });

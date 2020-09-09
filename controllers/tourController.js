@@ -11,7 +11,6 @@ const multerFilter = (req, file, cb) => {
   if (file.mimetype.startsWith('image')) {
     return cb(null, true);
   }
-  console.log('Multer filter');
   cb(new AppError('Not a image filetype! please upload correct file.', 401));
 };
 
@@ -32,7 +31,6 @@ exports.uploadTourImages = upload.fields([
 ]);
 
 exports.resizeTourImages = catchAsync(async (req, res, next) => {
-  //   console.log(req.files);
   if (!req.files.imageCover || !req.files.images) return next();
 
   // Cover Images
@@ -179,9 +177,7 @@ exports.getToursWithin = catchAsync(async (req, res, next) => {
 exports.getDistances = catchAsync(async (req, res, next) => {
   const { lating, unit } = req.params;
   const [lat, lng] = lating.split(',');
-  console.log(unit);
   const multiplier = unit === 'mi' ? 0.000621371 : 0.001;
-  console.log(multiplier);
   if (!lat || !lng) {
     return next(new AppError('Please provide the correct cordinates', 400));
   }

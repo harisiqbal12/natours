@@ -51,7 +51,6 @@ exports.createOne = Model =>
 
 exports.getOne = (Model, popOptions) =>
     catchAsync(async (req, res, next) => {
-        console.log('working');
         let query = Model.findById(req.params.id);
         if (popOptions) query = query.populate(popOptions);
 
@@ -81,7 +80,6 @@ exports.getAll = Model =>
 
         // const doc = await features.query.explain();
         const doc = await features.query;
-        console.log(doc);
 
         // SEND RESPONSE
         res.status(200).json({

@@ -8,7 +8,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
-// const cors = require('cors');
+const compression = require('compression');
 // const cookieSession = require('cookie-session')
 
 const AppError = require('./utils/appError');
@@ -25,19 +25,10 @@ app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
 dotenv.config({ path: './config.env' });
-console.log(process.env.NODE_ENV);
 
 // Development Logging
 
 //@GLOBAL-MIDDLEWARE
-
-// app.use(
-//     cors({
-//         origin: '*',
-//         // credentials: true,
-//         // optionsSuccessStatus: 200,
-//     }),
-// );
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
@@ -82,11 +73,10 @@ app.use(
   }),
 );
 
-// Test Middleware
-// let cookie;
+app.use(compression());
 
+// Test Middleware
 app.use((req, res, next) => {
-  // console.log(req.cookies);
   // cookie = req.cookies;
 
   next();

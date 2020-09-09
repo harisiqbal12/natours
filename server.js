@@ -6,8 +6,6 @@ const app = require('./app');
 // @CATCHING-ERROR
 
 process.on('uncaughtException', err => {
-  console.log(err.name, err.message);
-  console.log('Error Occured! shutting down....');
   process.exit(1);
 });
 
@@ -28,8 +26,6 @@ const mangoos = async () => {
     useFindAndModify: false,
     useUnifiedTopology: true,
   });
-  // console.log(data.connection);
-  console.log('data base connected');
 };
 
 mangoos();
@@ -39,16 +35,12 @@ mangoos();
  */
 
 const expire = new Date(Date.now() + parseInt(process.env.COOKIE_EXPIRE, 10));
-console.log(expire);
 
 const port = process.env.PORT;
 const server = app.listen(port, () => {
-  console.log('Listening.....');
 });
 
 process.on('unhandledRejection', err => {
-  console.log(err.name, err.message);
-  console.log('UNHANDLER REJECTION! shutting down...');
   server.close(() => {
     process.exit(1);
   });
@@ -69,4 +61,3 @@ process.on('unhandledRejection', err => {
 // const check = name.forEach((el, index) => {
 //     save[index] = el[0].toUpperCase() + el.substr(1).toLowerCase();
 // });
-// console.log(save.join(' '))
